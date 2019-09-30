@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -30,8 +31,12 @@ public class NopCommerceForEachAssertPractice extends Utils
         getUrl("Url");
     }
     @AfterMethod
-    public void closeBrowser()
+    public void tearDown(ITestResult result)
     {
+//        if(ITestResult.FAILURE==result.getStatus())
+//        {
+//            captureScreenShot(driver, result.getName());
+//        }
         driver.quit();
     }
     @Test
@@ -41,7 +46,7 @@ public class NopCommerceForEachAssertPractice extends Utils
         //click on first product to compare
         clickOnElement(By.xpath("//div[1]/div/div[2]/div[3]/div[2]/input[2]"));
         //check the green line on top of the page to make sure product has been added
-        Assert.assertEquals((driver.findElement(By.xpath("//p[@class='content']")).getText()),"1The product has been added to your product comparison");
+        Assert.assertEquals((driver.findElement(By.xpath("//p[@class='content']")).getText()),"The product has been added to your product comparison");
         //explicit wait for invisible the green line
         waitForAlertInvisible((By.id("bar-notification")), 5);
         //click on second product to compare
@@ -55,6 +60,8 @@ public class NopCommerceForEachAssertPractice extends Utils
         Assert.assertTrue(firstItem.isDisplayed());
         WebElement secondItem = driver.findElement(By.xpath("//a[contains(text(),'Build your own computer')]"));
         Assert.assertTrue(secondItem.isDisplayed());
+        //screenshot method
+        captureScreenShot(driver, "Check Both Items Are in Basket");
         //click on clear button
         clickOnElement(By.xpath("//a[@class='clear-list']"));
         //make sure both products are cleared from the page
@@ -80,6 +87,8 @@ public class NopCommerceForEachAssertPractice extends Utils
         assertMethod(By.xpath("//div[@class='result']"),"News comment is successfully added.");
         //assert to check written comment is posted
         assertMethod(By.xpath("//p[contains(text(),'website for shopping')]"),"wonderful website for shopping");
+        //take a screenshot
+        takeScreenShot(driver);
 
         //need to check if the posted comment has been posted to the bottom
         //driver.findElement(By.xpath("//p[contains(text(),'website for shopping')]")).getLocation();
@@ -89,12 +98,11 @@ public class NopCommerceForEachAssertPractice extends Utils
         System.out.println(location.getLocation());
         Assert.assertEquals(location.getLocation(),"(667, 58235)");
         softAssert2.assertAll();
-        //take a screenshot
-        takeScreenShot(driver, "src\\main\\Resources\\Screenshots");
-    }
+        }
     @Test
     public void userShouldAbleToSearchDesiredProductFromSearchStoreBar()
     {
+        SoftAssert softAssert3 = new SoftAssert();
         //enter the product name in search store
         enterText(By.xpath("//input[@name='q']"),loadProps.getProperty("SearchStore"));
         //click on search bar
@@ -118,8 +126,11 @@ public class NopCommerceForEachAssertPractice extends Utils
         }
         //total nike products
         System.out.println(count);
+        //assert of all products have nike (product) name in it.
+       // String itemContainsProductName = searchProduct.getText();
+       // Assert.assertEquals(itemContainsProductName,"Nike");
         //assert will compare the result of total nike products with products numbers with products.size()
         Assert.assertEquals(products.size(),count);
+        softAssert3.assertAll();
     }
-
 }

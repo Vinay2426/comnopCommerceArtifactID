@@ -3,6 +3,7 @@ package com.nopCommerce.Group;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.interactions.SourceType;
 import org.openqa.selenium.support.ui.*;
 import org.testng.Assert;
 
@@ -190,13 +191,19 @@ public class Utils extends BasePage
         DateFormat format=new SimpleDateFormat("ddMMyyHHmmss");
         return format.format(new Date());
     }
-    //(28) take screenshot of current display(full)
-
-
-
-
+    //(28) captureScreenShot when test case fails
+    public static void captureScreenShot(WebDriver driver, String screenShotName) {
+        try {
+            TakesScreenshot ts = (TakesScreenshot) driver;
+            File source = ts.getScreenshotAs(OutputType.FILE);
+            FileUtils.copyFile(source, new File("src\\main\\Resources\\Screenshots" + screenShotName + ".png"));
+            System.out.println("***ScreenShot is taken***");
+        } catch (IOException e) {
+            System.out.println("Exception while taking ScreenShot" + e.getMessage());
+        }
+    }
     //(29) take screenshot of browser
-    public static void takeScreenShot(WebDriver webdriver, String fileWithPath) throws IOException
+    public static void takeScreenShot(WebDriver webdriver) throws IOException
     {
         //convert web driver object to take screen shot
         TakesScreenshot scrShot = ((TakesScreenshot)webdriver);
@@ -205,7 +212,7 @@ public class Utils extends BasePage
         File SrcFile = scrShot.getScreenshotAs(OutputType.FILE);
 
         //move image file to new destination
-        File DestFile = new File(fileWithPath);
+        File DestFile = new File("src\\main\\Resources\\Screenshots");
 
         //copy file at destination
         FileUtils.copyFile(SrcFile, DestFile);
@@ -256,4 +263,5 @@ public class Utils extends BasePage
         Actions action = new Actions(driver);
         action.moveToElement(driver.findElement(by)).perform();
     }
+
 }
