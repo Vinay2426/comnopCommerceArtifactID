@@ -78,27 +78,28 @@ public class NopCommerceForEachAssertPractice extends Utils
         //assert to check we are on right page
         assertMethod(By.xpath("//h1[contains(text(),'New online store is open!')]"),"New online store is open!");
         //write title of the comment
-        enterText(By.id("AddNewComment_CommentTitle"),"nop commerce");  //Learn unique software testing
+        enterText(By.id("AddNewComment_CommentTitle"),"nop commerce");
         //write comments
-        enterText(By.id("AddNewComment_CommentText"),"wonderful website for shopping"); //Practice makes perfect
+        enterText(By.id("AddNewComment_CommentText"),"wonderful website for shopping");
         //click on New Comment
         clickOnElement(By.xpath("//input[@value='New comment']"));
+        //take a screenshot
+        //captureScreenShot(driver, "new comment" );
         //assert to check comment has been successfully submitted
         assertMethod(By.xpath("//div[@class='result']"),"News comment is successfully added.");
         //assert to check written comment is posted
         assertMethod(By.xpath("//p[contains(text(),'website for shopping')]"),"wonderful website for shopping");
-        //take a screenshot
-        takeScreenShot(driver);
-
-        //need to check if the posted comment has been posted to the bottom
-        //driver.findElement(By.xpath("//p[contains(text(),'website for shopping')]")).getLocation();
-
+        //assertion to check the comment's location on the comment page
         WebElement location = driver.findElement(By.xpath("//p[contains(text(),'website for shopping')]"));
         //location.getLocation();
+        //location of the comment will be printed
         System.out.println(location.getLocation());
+        //assert the comment by using its location on the page
+        //Assert.assertSame(location.getLocation(),"(667, 58235)");
         Assert.assertEquals(location.getLocation(),"(667, 58235)");
         softAssert2.assertAll();
         }
+
     @Test
     public void userShouldAbleToSearchDesiredProductFromSearchStoreBar()
     {
@@ -118,6 +119,8 @@ public class NopCommerceForEachAssertPractice extends Utils
             {
                 count++;
                 System.out.println(searchProduct.getText());
+                //assert of all products have nike (product) name in it.
+                Assert.assertTrue((searchProduct.getText()).contains("Nike"));
             }
             else
             {
@@ -126,9 +129,6 @@ public class NopCommerceForEachAssertPractice extends Utils
         }
         //total nike products
         System.out.println(count);
-        //assert of all products have nike (product) name in it.
-       // String itemContainsProductName = searchProduct.getText();
-       // Assert.assertEquals(itemContainsProductName,"Nike");
         //assert will compare the result of total nike products with products numbers with products.size()
         Assert.assertEquals(products.size(),count);
         softAssert3.assertAll();
