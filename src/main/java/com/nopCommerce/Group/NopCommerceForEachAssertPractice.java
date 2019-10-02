@@ -40,9 +40,8 @@ public class NopCommerceForEachAssertPractice extends Utils
         driver.quit();
     }
     @Test
-    public void compareTwoProductsFromHomepageAndClearItFromComparePage()
-    {
-        SoftAssert soft = new SoftAssert();
+    public void compareTwoProductsFromHomepageAndClearItFromComparePage() throws IOException {
+        SoftAssert softAssert1 = new SoftAssert();
         //click on first product to compare
         clickOnElement(By.xpath("//div[1]/div/div[2]/div[3]/div[2]/input[2]"));
         //check the green line on top of the page to make sure product has been added
@@ -67,10 +66,10 @@ public class NopCommerceForEachAssertPractice extends Utils
         //make sure both products are cleared from the page
         assertMethod(By.xpath("//div[@class='no-data']"),"You have no items to compare.");
         //softAssert will keep checking all the asserts even though one of them is failed
-        soft.assertAll();
+        softAssert1.assertAll();
     }
     @Test
-    public void userCanAddCommentForOnlineShoppingOnHomePage() throws IOException
+    public void userCanAddCommentForOnlineShoppingOnHomePage()
     {
         SoftAssert softAssert2 = new SoftAssert();
         //click on 'Details'to leave the review
@@ -99,7 +98,6 @@ public class NopCommerceForEachAssertPractice extends Utils
         Assert.assertEquals(location.getLocation(),"(667, 58235)");
         softAssert2.assertAll();
         }
-
     @Test
     public void userShouldAbleToSearchDesiredProductFromSearchStoreBar()
     {
@@ -119,8 +117,8 @@ public class NopCommerceForEachAssertPractice extends Utils
             {
                 count++;
                 System.out.println(searchProduct.getText());
-                //assert of all products have nike (product) name in it.
-                Assert.assertTrue((searchProduct.getText()).contains("Nike"));
+                //assert of all products have product(e.g.: nike) name in it.
+                Assert.assertTrue((searchProduct.getText()).contains(loadProps.getProperty("SearchStore")));
             }
             else
             {
