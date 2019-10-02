@@ -10,7 +10,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import java.io.IOException;
 import java.util.List;
 
 public class NopCommerceForEachAssertPractice extends Utils
@@ -33,16 +32,18 @@ public class NopCommerceForEachAssertPractice extends Utils
     @AfterMethod
     public void tearDown(ITestResult result)
     {
-//        if(ITestResult.FAILURE==result.getStatus())
-//        {
-//            captureScreenShot(driver, result.getName());
-//        }
+        if(ITestResult.FAILURE==result.getStatus())
+        {
+            captureScreenShot(driver, result.getName());
+        }
         driver.quit();
     }
     @Test
-    public void compareTwoProductsFromHomepageAndClearItFromComparePage() throws IOException {
+    public void compareTwoProductsFromHomepageAndClearItFromComparePage()
+    {
         SoftAssert softAssert1 = new SoftAssert();
         //click on first product to compare
+        ////input[@type='button'][@value='Add to cart'][@onclick='return AjaxCart.addproducttocart_catalog("/addproducttocart/catalog/1/1/1"),!1']
         clickOnElement(By.xpath("//div[1]/div/div[2]/div[3]/div[2]/input[2]"));
         //check the green line on top of the page to make sure product has been added
         Assert.assertEquals((driver.findElement(By.xpath("//p[@class='content']")).getText()),"The product has been added to your product comparison");
@@ -82,20 +83,10 @@ public class NopCommerceForEachAssertPractice extends Utils
         enterText(By.id("AddNewComment_CommentText"),"wonderful website for shopping");
         //click on New Comment
         clickOnElement(By.xpath("//input[@value='New comment']"));
-        //take a screenshot
-        //captureScreenShot(driver, "new comment" );
         //assert to check comment has been successfully submitted
         assertMethod(By.xpath("//div[@class='result']"),"News comment is successfully added.");
         //assert to check written comment is posted
         assertMethod(By.xpath("//p[contains(text(),'website for shopping')]"),"wonderful website for shopping");
-        //assertion to check the comment's location on the comment page
-        WebElement location = driver.findElement(By.xpath("//p[contains(text(),'website for shopping')]"));
-        //location.getLocation();
-        //location of the comment will be printed
-        System.out.println(location.getLocation());
-        //assert the comment by using its location on the page
-        //Assert.assertSame(location.getLocation(),"(667, 58235)");
-        Assert.assertEquals(location.getLocation(),"(667, 58235)");
         softAssert2.assertAll();
         }
     @Test
@@ -113,7 +104,7 @@ public class NopCommerceForEachAssertPractice extends Utils
         int count=0;
         for (WebElement searchProduct : products)
         {
-            if (searchProduct.getAttribute("outerHTML").contains(loadProps.getProperty("SearchStore")))
+            if (searchProduct.getText().contains(loadProps.getProperty("SearchStore")))
             {
                 count++;
                 System.out.println(searchProduct.getText());

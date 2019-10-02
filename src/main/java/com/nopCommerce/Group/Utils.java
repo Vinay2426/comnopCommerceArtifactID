@@ -78,13 +78,6 @@ public class Utils extends BasePage
                 .withTimeout(time, TimeUnit.SECONDS)
                 .pollingEvery(frequency, TimeUnit.SECONDS)
                 .ignoring(Exception.class);
-//        WebElement foo = wait.until(new Function<WebDriver, WebElement>);
-//        {
-//            public WebElement apply(WebDriver driver)
-//            {
-//                return driver.findElement(By.id("foo"));
-//            }
-//        }
     }
     //(11) Try to click element multiple if not available in first go
     public static void clickingMultipleTimes(By by, int index)
@@ -161,8 +154,6 @@ public class Utils extends BasePage
     //(23) Scroll to element and click
     public static void scrollWebPageToViewElementAndClick(By by)
     {
-        //Actions actions = new Actions(driver);
-        //driver.findElement(by).actions.moveToElement().actions.perform().Click();
         Actions actions = new Actions(driver);
         driver.findElement(by);
         actions.moveToElement((WebElement) driver);
@@ -175,17 +166,7 @@ public class Utils extends BasePage
         wait.until(ExpectedConditions.alertIsPresent());
         driver.switchTo().alert().getText();
     }
-    //(25) Get attribute of element//get attribute
-    public static String getAttributeElement(By by, String text)
-    {
-        return driver.findElement(by).getAttribute(text);
-    }
-    //(26) get css property of element //get css value
-    public static String getCssValueElement(By by, String text)
-    {
-        return driver.findElement(by).getCssValue(text);
-    }
-    //(27) it will generate random numbers for email
+   //(27) it will generate random numbers for email
     public static String randomDate()
     {
         DateFormat format=new SimpleDateFormat("ddMMyyHHmmss");
@@ -202,56 +183,7 @@ public class Utils extends BasePage
             System.out.println("Exception while taking ScreenShot" + e.getMessage());
         }
     }
-    //(29) take screenshot of browser
-    public static void takeScreenShot(WebDriver webdriver) throws IOException
-    {
-        //convert web driver object to take screen shot
-        TakesScreenshot scrShot = ((TakesScreenshot)webdriver);
-
-        //call get screen shot as method to create image file
-        File SrcFile = scrShot.getScreenshotAs(OutputType.FILE);
-
-        //move image file to new destination
-        File DestFile = new File("src\\main\\Resources\\Screenshots");
-
-        //copy file at destination
-        FileUtils.copyFile(SrcFile, DestFile);
-    }
-    //(30) date stamp short
-    public static String shortDateStamp()
-    {
-        SimpleDateFormat dateFormat1 = new SimpleDateFormat();
-        return new SimpleDateFormat("dd.MM.yyyy").format(new Date());
-    }
-    //(31) date stamp long
-    public static String longDateStamp()
-    {
-        SimpleDateFormat dateFormat1 = new SimpleDateFormat();
-        return new SimpleDateFormat("dd.MM.yyyy.HH.mm.ss").format(new Date());
-    }
-    //(32) convert date....
-//    public SimpleDateFormat covertDate()
-//    {
-//        SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyyMMddHHMM");
-//        return new SimpleDateFormat("dd-MMM-yyyy HH:MM");
-//    }
-    //(33) This method determines if an element is enabled or not
-    public static boolean ifWebElementIsEnabledOrNot(By by)
-    {
-        return driver.findElement(by).isEnabled();
-    }
-    //(34) get location false or true
-    public static boolean getLocation(By by)
-    {
-        Point location = driver.findElement(by).getLocation();
-        return false;
-    }
-    //(35) get the text from locator
-    public static String getTextFromLocator(By by)
-    {
-        return driver.findElement(by).getText();
-    }
-    //(36) get the url
+   //(36) get the url
     public static void getUrl(String key)
     {
         LoadProps loadProps = new LoadProps();
