@@ -87,8 +87,19 @@ public class NopCommerceForEachAssertPractice extends Utils
         assertMethod(By.xpath("//div[@class='result']"),"News comment is successfully added.");
         //assert to check written comment is posted
         assertMethod(By.xpath("//p[contains(text(),'website for shopping')]"),"wonderful website for shopping");
+        //to check comment has been post in the bottom of the page
+        List<WebElement> commentList = driver.findElements(By.xpath("//p[contains(text(),'website for shopping')]"));
+        //it will obtain last comment
+        WebElement last_Comment = commentList.get(commentList.size()-1);
+        //it will get text of last comment
+        String my_Last_Comment = last_Comment.getText();
+        System.out.println("wonderful website for shopping");
+        System.out.println(my_Last_Comment);
+        //compare the actual with expected
+        softAssert2.assertEquals(my_Last_Comment, "wonderful website for shopping");
+
         softAssert2.assertAll();
-        }
+    }
     @Test
     public void userShouldAbleToSearchDesiredProductFromSearchStoreBar()
     {
